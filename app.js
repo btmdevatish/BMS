@@ -4,7 +4,9 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+
 // routes
+const adminBackendRoutes = require("./api/routes/adminBackendRoutes");
 const blogsRouter = require("./api/routes/blogRoutes");
 const authorRouter = require("./api/routes/authorRouters");
 const commentRouter = require("./api/routes/commentRouters");
@@ -13,6 +15,11 @@ const mediaRoutes = require("./api/routes/mediaRouters");
 const tagRouters = require("./api/routes/tagRouterss");
 const viewBlogsRouters = require("./api/routes/viewBlogsRouters");
 const adminRouters = require("./api/routes/adminRoutes");
+
+//user router
+const userFantacy = require("./api/routes/fantacyRoutes");
+
+
 // const userRoutes = require("./api/routes/user");
 // const pageRoutes = require("./api/routes/pages");
 
@@ -29,10 +36,14 @@ mongoose
   });
 
 // morgan middleware
+
 app.use(morgan("dev"));
 app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views'); // This is where your EJS templates will be stored
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -48,7 +59,9 @@ app.use((req, res, next) => {
 });
 
 
+
 // handle reqest
+app.use("", adminBackendRoutes);
 app.use("/blog", blogsRouter);
 app.use("/author", authorRouter);
 app.use("/comment", commentRouter);
@@ -57,6 +70,11 @@ app.use("/media", mediaRoutes);
 app.use("/tag", tagRouters);
 app.use("/all-blogs", viewBlogsRouters);
 app.use("/admin", adminRouters);
+
+//
+app.use("/upcomming-fantacy", userFantacy);
+
+
 // app.use("/upload", uploadRoutes);
 // app.use("/user", userRoutes);
 // app.use("/pages", pageRoutes);

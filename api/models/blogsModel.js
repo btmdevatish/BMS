@@ -24,6 +24,10 @@ const blogSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Author",
     },
+    fantacy_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Fantacy",
+    },
     comment_id: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -32,6 +36,7 @@ const blogSchema = mongoose.Schema(
     ],
     comment_status: { type: Boolean, default: false },
     comment_count: { type: String },
+    date:{ type: String}
   },
   {
     timestamps: true,
